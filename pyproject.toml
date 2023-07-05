@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "watchman"
+authors = [
+  { name="Fahim Ali Zain", email="fahimalizain@gmail.com" },
+]
+description = "CCTV RTSP Watchman"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dynamic = ["version", "readme", "dependencies"]
+
+[tool.setuptools.dynamic]
+version = { attr = "watchman.__VERSION__" }
+readme = { file = ["README.md"] }
+dependencies =  { file = ["requirements.txt"] }
+
+[project.urls]
+"Homepage" = "https://github.com/fahimalizain/watchman"
+"Bug Tracker" = "https://github.com/fahimalizain/watchman"
