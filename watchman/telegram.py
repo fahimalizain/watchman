@@ -68,10 +68,8 @@ class Telegram(AsyncRunner):
             frame_width * scale_factor), int(frame_height * scale_factor)
 
         # Define the codec using VideoWriter_fourcc and create a VideoWriter object
-        fourcc = cv2.VideoWriter_fourcc(*'HEVC')
+        fourcc = cv2.VideoWriter_fourcc(*'h264')
         out = cv2.VideoWriter(temp.name, fourcc, 25, (new_width, new_height))
-        # out = cv2.VideoWriter(
-        #     f"{channel_name}-{time.time()}.mp4", fourcc, 25, (new_width, new_height))
 
         for frame in cv_frames:
             resized_frame = cv2.resize(frame, (new_width, new_height))

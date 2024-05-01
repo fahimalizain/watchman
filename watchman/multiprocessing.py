@@ -26,7 +26,7 @@ class AbstractMultiprocessing(metaclass=abc.ABCMeta):
         self.process.start()
 
     def _run_on_process(self, **data: dict):
-        self.logger = logging.getLogger(self.__class__.__name__)
+        self.setup_logger()
 
         self.__dict__.update(data)
         self.run()
@@ -41,6 +41,17 @@ class AbstractMultiprocessing(metaclass=abc.ABCMeta):
 
     def put_in_queue(self, item):
         self.output_queue.put(item)
+
+    def setup_logger(self):
+        self.logger = logging.getLogger(self.__class__.__name__)
+        self.logger.propagate = False
+
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter(
+            fmt='%(asctime)s %(levelname)s %(name)s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+        handler.setFormatter(formatter)
+
+        self.logger.addHandler(handler)
 
     def log_info(self, msg, *args, **kwargs):
         return self.logger.info(msg, *args, **kwargs)

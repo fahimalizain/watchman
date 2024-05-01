@@ -92,6 +92,10 @@ class YoloUnit(SyncRunner):
                 class_id = class_id.astype(int)
                 if class_id not in YOLO_v8n_LABELS:
                     continue
+                
+                if conf < 0.6:
+                    # Ignore low confidence detections
+                    continue
 
                 # Draw the bounding box and label on the frame
                 x1, y1, x2, y2 = box.astype(int)
