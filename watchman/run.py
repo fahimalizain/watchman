@@ -1,4 +1,5 @@
 from multiprocessing import Process, Queue
+from dotenv import load_dotenv
 
 from .mog_cuda import MOGCuda
 from .yolo import YoloUnit
@@ -8,6 +9,7 @@ from .multiprocessing import AbstractMultiprocessing
 from .config import get_selective_rtsp_urls, get_all_rtsp_urls
 
 if __name__ == "__main__":
+    load_dotenv()
     yolo = YoloUnit()
     telegram = Telegram()
     yolo.connect(telegram)

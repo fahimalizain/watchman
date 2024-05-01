@@ -1,3 +1,4 @@
+import os
 import cv2
 import traceback
 from typing import List
@@ -11,7 +12,7 @@ from .utils.SuppressStderr import SuppressStderr
 class Telegram(AsyncRunner):
 
     def setup(self):
-        TOKEN = "6209016219:AAHKNSBr9VCIsPUAc00Qsm0g6EN7OPA8bXg"
+        TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 
         self.app = ApplicationBuilder().token(TOKEN).rate_limiter(
             AIORateLimiter(overall_max_rate=20, overall_time_period=60, group_max_rate=18, group_time_period=60, max_retries=5)).build()
@@ -40,11 +41,10 @@ class Telegram(AsyncRunner):
                     f"Telelgram Error {channel_name} {str(e)}\n{tb}")
 
     async def send_via_telegram(self, channel_name: str, mp4: bytes):
-        FAHIM_CHAT_ID = 782968289
-        FAAZ_CCTV_EVENT_CHAT_ID = -952427800
+        TELEGRAM_CHAT_ID = int(os.environ.get('TELEGRAM_CHAT_ID'))
 
         await self.app.bot.send_animation(
-            FAHIM_CHAT_ID, mp4, filename=f'{channel_name}.mp4')
+            TELEGRAM_CHAT_ID, mp4, filename=f'{channel_name}.mp4')
 
     async def make_mp4(self, channel_name: str, cv_frames: List):
         import numpy as np
